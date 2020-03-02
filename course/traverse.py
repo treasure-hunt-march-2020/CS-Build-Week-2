@@ -3,13 +3,6 @@ from graph import Graph
 import requests 
 import json
 
-def traverse(self):
-    stack = Stack()
-    option = Stack()
-    visited = set()
-    path = []
-    stack.push(0)
-
 
 def init(self):
     headers = {
@@ -30,5 +23,13 @@ def move(direction):
 
     res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, data=data)
     print(res.json()) 
+
+def traverse(self):
+    graph = Graph()
+    stack = Stack()
+    option = Stack()
+    visited = set()
+    path = []
+
 
 # print(move("ololo"))

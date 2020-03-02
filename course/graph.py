@@ -6,7 +6,7 @@ import json
 class Graph:
 
     def __init__(self):
-        self.vertices = {}
+        self.directions = {}
         self.room_data = {}
 
 
@@ -14,21 +14,21 @@ class Graph:
         edges = {}
         for way in exits:
             edges[way] = "?"
-        self.vertices[room_id] = edges
+        self.directions[room_id] = edges
         self.room_data[room_id] = {"title": title, "description": description, "coordinates": coordinates, "players": players, "items": items, "exits": exits, "cooldown": cooldown, "errors": errors, "messages": messages}
 
 
     def add_edge(self, room1, direction, room2):
         global_directions = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
-        if room1 in self.vertices and room2 in self.vertices:
-            self.vertices[room1][direction] = room2
+        if room1 in self.directions and room2 in self.directions:
+            self.directions[room1][direction] = room2
             reverse_direction = global_directions[direction]
-            self.vertices[room2][reverse_direction] = room1
+            self.directions[room2][reverse_direction] = room1
         else:
             raise IndexError("That vertex does not exist!")
 
     def get_neighbors(self, room_id):
-        return self.vertices[room_id]
+        return self.directions[room_id]
 
     def bft(self, starting_vertex):
         q = Queue()
