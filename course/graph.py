@@ -1,5 +1,7 @@
 from util import Stack, Queue
 import copy
+import requests 
+import json
 
 class Graph:
 
@@ -57,3 +59,16 @@ class Graph:
                      path_copy = copy.copy(path)
                      path_copy.append(neighbor)
                      q.enqueue(path_copy)
+
+
+
+headers = {
+    'Authorization': 'Token 0578cda4d3cc0b65ac21d7e03dd509bbafd50e39',
+    'Content-Type': 'application/json',
+}
+
+data = '{"direction":"n"}'
+
+# res = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=headers)
+res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, data=data)
+print(res.json()) 
