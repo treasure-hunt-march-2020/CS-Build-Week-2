@@ -37,6 +37,7 @@ def inventory_status():
 
     res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/status/', headers=headers)
     print("Inventory", res.json())
+    return res.json()
 
 # =================== Examine =====================
 def examine_object(name):
