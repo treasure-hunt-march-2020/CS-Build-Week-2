@@ -16,7 +16,8 @@ function Home(props) {
     setLoading(true)
     let isSubscribed = true;
 
-    const AuthString = 'Token e8b177670f8c40271da9db9ca11736808cf614c5'
+    const AuthString = process.env.REACT_APP_JAMES_API_KEY
+
     axios.get(
       'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/',{ headers: { Authorization: AuthString } }
     ).then(result => {
@@ -45,6 +46,12 @@ function Home(props) {
               <h1 className="room-name">{item.title}</h1>
               <h4 className="room-type">You are at {item.coordinates} coordinates, the elevation is {item.elevation} and the terrain is {item.terrain}</h4>
               <p>{item.description}</p>
+              <div>
+                <button className="button-direction">North</button>
+                <button className="button-direction">East</button>
+                <button className="button-direction">South</button>
+                <button className="button-direction">West</button>
+            </div>
             </div>
           ))}
         </div>
