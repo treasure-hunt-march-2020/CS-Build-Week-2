@@ -3,6 +3,7 @@ from graph import Graph
 from actions import *
 import requests 
 import json
+import time
 
 
 def init():
@@ -13,6 +14,7 @@ def move(direction):
     data = '{"direction":f{direction}'
     res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, data=data)
     print(res.json())
+    time.sleep(res.json().cooldown)
     return res.json()
 
 def traverse(start_room):
@@ -49,5 +51,27 @@ def traverse(start_room):
                 next_room = move(way)
                 print("next_room: ", next_room)
                 graph.add_vertex(next_room["room_id"], next_room["title"], next_room["description"], next_room["coordinates"], next_room["exits"], next_room["cooldown"], next_room["errors"], next_room["messages"])
+                print("graph.directions", graph.directions)
+                graph.add_edge(room_id, way, next_room["room_id"])
+                print("graph.directions", graph.directions)
+                stack.push(next_room["room_id"])
+        
+        if directions > 1:
+            options.push(room_id)
 
-print(init())
+        if options == 0:
+            next_room = options.pop()
+            room_path = graph.bfs(room_id, next_room)
+            path.extend(room_path[1:])
+            for i in room_path:
+                print("bfs", i)
+                direction = graph.directions[room_id]
+                for way, value in direction:
+                    print("bfs second", i, value)
+                    if value == i:
+                        move(way)
+                if i not in visited:
+                    visited.add(i)
+            stack.push(path[-1])
+        print("graph.directions: ", graph.directions)
+    return None
