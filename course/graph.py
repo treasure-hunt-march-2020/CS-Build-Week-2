@@ -52,7 +52,7 @@ class Graph:
             print(path)
             last_vertex = path[-1]
             if last_vertex == destination_vertex:
-                return path[1:]
+                return path
             if path[-1] not in visited:
                 visited.add(path[-1])
                 # print(visited)

@@ -28,7 +28,7 @@ def traverse(start_room):
     visited = set()
     # Pushing first room in stack
     stack.push(start_room["room_id"])
-    graph.add_vertex(start_room["room_id"], start_room["title"], start_room["description"], start_room["coordinates"], start_room["exits"], start_room["cooldown"], start_room["errors"], start_room["messages"])
+    graph.add_vertex(start_room["room_id"], start_room["title"], start_room["description"], start_room["coordinates"], start_room["players"], start_room["items"], start_room["exits"], start_room["cooldown"], start_room["errors"], start_room["messages"])
 
     while stack.size() > 0:
         room_id = stack.pop()
@@ -38,6 +38,7 @@ def traverse(start_room):
             visited.add(room_id)
             path.append(room_id)
         if len(visited) == 500:
+            print("==========That's it==========")
             return path
         exits = graph.directions[room_id]
         print("exits: ", exits)
@@ -51,7 +52,7 @@ def traverse(start_room):
                 if moved == False:
                     next_room = move(way)
                     print("next_room: ", next_room)
-                    graph.add_vertex(next_room["room_id"], next_room["title"], next_room["description"], next_room["coordinates"], next_room["exits"], next_room["cooldown"], next_room["errors"], next_room["messages"])
+                    graph.add_vertex(next_room["room_id"], next_room["title"], next_room["description"], next_room["coordinates"], next_room["players"], next_room["items"], next_room["exits"], next_room["cooldown"], next_room["errors"], next_room["messages"])
                     # print("graph.directions", graph.directions)
                     graph.add_edge(room_id, way, next_room["room_id"])
                     # print("graph.directions", graph.directions)
@@ -77,3 +78,7 @@ def traverse(start_room):
             stack.push(path[-1])
         print("graph.directions: ", graph.directions)
     return None
+
+# startt = {'room_id': 7, 'title': 'A misty room', 'description': 'You are standing on grass and surrounded by a dense mist. You can barely make out the exits in any direction.', 'coordinates': '(59,58)', 'elevation': 0, 'terrain': 'NORMAL', 'players': [], 'items': [], 'exits': ['n', 'e', 'w'], 'cooldown': 1.0, 'errors': [], 'messages': []}
+# # init()
+# traverse(startt)
