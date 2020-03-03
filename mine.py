@@ -3,7 +3,7 @@ import requests
 import sys
 import random
 
-def proof_of_work(last_proof, difficulty):
+def new_proof(last_proof, difficulty):
     proof = 0
     tries = 0
     while valid_proof(last_proof, proof, difficulty) is False:
@@ -24,3 +24,8 @@ def valid_proof(last_proof, proof, difficulty):
         print(f'Valid solution: {guess_hash} from proof {proof}')
 
     return guess_hash[:difficulty] == '0' * difficulty
+
+# def mine(new_proof):
+#     data = '{"proof": f"{new_proof}"'
+#     res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/bc/mine/', headers=headers, data=data)
+#     return res.json
