@@ -55,30 +55,35 @@ def traverse(start_room):
                     graph.add_vertex(next_room["room_id"], next_room["title"], next_room["description"], next_room["coordinates"], next_room["players"], next_room["items"], next_room["exits"], next_room["cooldown"], next_room["errors"], next_room["messages"])
                     # print("graph.directions", graph.directions)
                     graph.add_edge(room_id, way, next_room["room_id"])
-                    # print("graph.directions", graph.directions)
+                    print("graph.directions", graph.directions)
+                    print("\n===graph.directions len===", len(graph.directions))
                     stack.push(next_room["room_id"])
                     moved = True
         
         if directions > 1:
             options.push(room_id)
 
-        if options == 0:
-            next_room = options.pop()
-            room_path = graph.bfs(room_id, next_room)
-            path.extend(room_path[1:])
-            for i in room_path:
-                print("bfs", i)
-                direction = graph.directions[i]
+        if directions == 0:
+            return_room = options.pop()
+            print("==========BFS==========")
+            room_path = graph.bfs(room_id, return_room)
+
+            i = 0
+            next_room_to = 0
+            while i < len(room_path)-1:
+                current_room = room_path[i]
+                next_room_to = room_path[i+1]
+                direction = graph.directions[current_room]
+
                 for way in direction:
-                    print("bfs second", i, direction[way])
-                    if direction[way] == i:
-                        move(way)
-                if i not in visited:
-                    visited.add(i)
-            stack.push(path[-1])
-        print("graph.directions: ", graph.directions)
+                    if direction[way] == next_room_to:
+                        next_room = move(way)
+                if current_room not in visited:
+                    visited.add(current_room)
+                i+=1
+            stack.push(next_room_to)
     return None
 
-# startt = {'room_id': 7, 'title': 'A misty room', 'description': 'You are standing on grass and surrounded by a dense mist. You can barely make out the exits in any direction.', 'coordinates': '(59,58)', 'elevation': 0, 'terrain': 'NORMAL', 'players': [], 'items': [], 'exits': ['n', 'e', 'w'], 'cooldown': 1.0, 'errors': [], 'messages': []}
-# # init()
-# traverse(startt)
+startt = {'room_id': 63, 'title': 'A misty room', 'description': 'You are standing on grass and surrounded by a dense mist. You can barely make out the exits in any direction.', 'coordinates': '(60,64)', 'elevation': 0, 'terrain': 'NORMAL', 'players': ['User 20726', 'User 20649'], 'items': [], 'exits': ['n', 's', 'w'], 'cooldown': 1.0, 'errors': [], 'messages': []}
+# init()
+traverse(startt)
