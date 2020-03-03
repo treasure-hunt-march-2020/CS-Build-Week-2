@@ -43,18 +43,20 @@ def traverse(start_room):
         print("exits: ", exits)
 
         directions = 0
+        moved = False
         for way in exits:
             print("Way in exits: ", way, exits[way])
             if exits[way] == "?":
                 directions +=1
-                print("way: ", way)
-                next_room = move(way)
-                print("next_room: ", next_room)
-                graph.add_vertex(next_room["room_id"], next_room["title"], next_room["description"], next_room["coordinates"], next_room["exits"], next_room["cooldown"], next_room["errors"], next_room["messages"])
-                print("graph.directions", graph.directions)
-                graph.add_edge(room_id, way, next_room["room_id"])
-                print("graph.directions", graph.directions)
-                stack.push(next_room["room_id"])
+                if moved == False:
+                    next_room = move(way)
+                    print("next_room: ", next_room)
+                    graph.add_vertex(next_room["room_id"], next_room["title"], next_room["description"], next_room["coordinates"], next_room["exits"], next_room["cooldown"], next_room["errors"], next_room["messages"])
+                    # print("graph.directions", graph.directions)
+                    graph.add_edge(room_id, way, next_room["room_id"])
+                    # print("graph.directions", graph.directions)
+                    stack.push(next_room["room_id"])
+                    moved = True
         
         if directions > 1:
             options.push(room_id)
@@ -65,10 +67,10 @@ def traverse(start_room):
             path.extend(room_path[1:])
             for i in room_path:
                 print("bfs", i)
-                direction = graph.directions[room_id]
-                for way, value in direction:
-                    print("bfs second", i, value)
-                    if value == i:
+                direction = graph.directions[i]
+                for way in direction:
+                    print("bfs second", i, direction[way])
+                    if direction[way] == i:
                         move(way)
                 if i not in visited:
                     visited.add(i)

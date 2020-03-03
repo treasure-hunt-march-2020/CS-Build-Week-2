@@ -43,6 +43,7 @@ class Graph:
                     q.enqueue(neighbor)
 
     def bfs(self, starting_vertex, destination_vertex):
+        print("BFS starting_vertex, destination_vertex", starting_vertex, destination_vertex)
         q = Queue()
         q.enqueue([starting_vertex])
         visited = set()
@@ -51,11 +52,11 @@ class Graph:
             print(path)
             last_vertex = path[-1]
             if last_vertex == destination_vertex:
-                return path
+                return path[1:]
             if path[-1] not in visited:
                 visited.add(path[-1])
                 # print(visited)
                 for neighbor in self.get_neighbors(path[-1]):
                      path_copy = copy.copy(path)
-                     path_copy.append(neighbor)
+                     path_copy.append(self.directions[path[-1]][neighbor])
                      q.enqueue(path_copy)
