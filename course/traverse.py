@@ -11,10 +11,10 @@ def init():
     print(res.json()) 
 
 def move(direction):
-    data = '{"direction":f{direction}'
+    data = '{"direction":"'+str(direction)+'"}'
     res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, data=data)
     print(res.json())
-    time.sleep(res.json().cooldown)
+    time.sleep(res.json()["cooldown"])
     return res.json()
 
 def traverse(start_room):
