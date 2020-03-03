@@ -8,10 +8,21 @@ import time
 
 def init():
     res = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=headers)
-    print(res.json()) 
+    print("=====")
+    print("Start room is: ", res.json()["room_id"], res.json()["title"], res.json()["exits"])
+    print("=====")
+    time.sleep(res.json()["cooldown"])
+    return res.json()
 
 def move(direction):
     data = '{"direction":"'+str(direction)+'"}'
+    res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, data=data)
+    print(res.json())
+    time.sleep(res.json()["cooldown"])
+    return res.json()
+
+def move_know(direction, next_room_id):
+    data = '{"direction":"'+str(direction)+'", "next_room_id":"'+str(next_room_id)+'"}'
     res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, data=data)
     print(res.json())
     time.sleep(res.json()["cooldown"])
@@ -77,13 +88,19 @@ def traverse(start_room):
 
                 for way in direction:
                     if direction[way] == next_room_to:
-                        next_room = move(way)
+                        next_room = move_know(way, next_room_to)
                 if current_room not in visited:
                     visited.add(current_room)
                 i+=1
             stack.push(next_room_to)
     return None
 
-startt = {'room_id': 63, 'title': 'A misty room', 'description': 'You are standing on grass and surrounded by a dense mist. You can barely make out the exits in any direction.', 'coordinates': '(60,64)', 'elevation': 0, 'terrain': 'NORMAL', 'players': ['User 20726', 'User 20649'], 'items': [], 'exits': ['n', 's', 'w'], 'cooldown': 1.0, 'errors': [], 'messages': []}
-# init()
-traverse(startt)
+file = open("map.txt","w") 
+
+def start_app():
+    start_data = init()
+    file.write(str(traverse(start_data)))
+    file.close() 
+    # traverse(start_data)
+
+start_app()
