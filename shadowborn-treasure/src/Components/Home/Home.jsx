@@ -7,7 +7,12 @@ import axios from 'axios';
 
 import Spinner from '../Spinner/Spinner';
 
+import Controls from '../Controls/Controls'
+
 function Home(props) {
+    
+  console.log("Home Props",props)
+  
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState([true])
 
@@ -44,14 +49,17 @@ function Home(props) {
             <div className="card room" key={item.room_id} onClick={() => props.history.push(item.room_id)}>
               {/* <a href={item.name}>{item.name}</a> */}
               <h1 className="room-name">{item.title}</h1>
-              <h4 className="room-type">You are at {item.coordinates} coordinates, the elevation is {item.elevation} and the terrain is {item.terrain}</h4>
+              <h6 className="room-type">You are at {item.coordinates} coordinates, the elevation is {item.elevation} and the terrain is {item.terrain}</h6>
               <p>{item.description}</p>
               <div>
-                <button className="button-direction">North</button>
-                <button className="button-direction">East</button>
-                <button className="button-direction">South</button>
-                <button className="button-direction">West</button>
-            </div>
+                  <h6>Possible exits</h6>
+                  <div className="exits"> 
+                  {item.exits[0]} - 
+                  {item.exits[1]} - 
+                  {item.exits[2]} - 
+                  {item.exits[3]} </div>
+              </div>
+              <Controls />
             </div>
           ))}
         </div>
