@@ -92,6 +92,8 @@ const Controls = (props) => {
 
 
     const pickup_treasure = () => {
+        
+        setLoading(true)
         axios
             .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/take/', get_treasure, {
                 headers: { Authorization: AuthString}
@@ -101,6 +103,7 @@ const Controls = (props) => {
             setTreasure([res.data])
             console.log('Direction',direction)
             setTimeout((pickup_treasure) => {
+                setLoading(false)
                 window.location.reload(true);
             }, 17000);
         }).catch((err) => console.log(err));

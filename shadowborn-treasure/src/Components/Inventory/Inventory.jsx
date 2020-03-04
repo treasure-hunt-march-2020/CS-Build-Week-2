@@ -37,16 +37,18 @@ function Inventory(props) {
               <h6>STRENGTH: {item.strength}</h6>
               <h6>SPEED: {item.speed}</h6>
               <h6>GOLD: {item.gold}</h6>
-              {console.log("ooga booga",item.inventory)}
+              {console.log("Inventory items I've collected",item.inventory)}
 
             <div className="stuff">
+            <h6>Treasures:</h6>
             {((item.inventory == []) ?
                 <h6>No items in inventory!</h6>
                 
                 :
-
-                <h6>Treasures: {item.inventory}</h6>
                 
+                item.inventory.map(treasure => (
+                <h6 key={treasure}>{treasure}, </h6>
+                ))
               )}
             {((item.abilities !== []) ?
                 <h6>No abilities!</h6>
