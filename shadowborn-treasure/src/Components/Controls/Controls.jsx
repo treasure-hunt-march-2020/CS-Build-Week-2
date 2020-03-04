@@ -11,6 +11,7 @@ const Controls = (props) => {
     console.log("Controls Props",props)
     const [direction, setDirection] = useState([]);
     const [treasure, setTreasure] = useState([]);
+    const [sellTreasure, setSellTreasure] = useState([]);
     const [loading, setLoading] = useState([true])
 
     const AuthString = process.env.REACT_APP_JAMES_API_KEY
@@ -20,6 +21,7 @@ const Controls = (props) => {
     const east = '{"direction":"e"}'
     const west = '{"direction":"w"}'
     const get_treasure = '{"name":"treasure"}'
+    const confirm = '{"name":"treasure", "confirm":"yes"}'
 
     const moveNorth = () => {
 
@@ -101,7 +103,40 @@ const Controls = (props) => {
         ).then((res) => {
             console.log('Picked up Treasure', res)
             setTreasure([res.data])
-            console.log('Direction',direction)
+            setTimeout((pickup_treasure) => {
+                setLoading(false)
+                window.location.reload(true);
+            }, 17000);
+        }).catch((err) => console.log(err));
+    };
+
+    const sell_treasure = () => {
+
+        setLoading(true)
+        axios
+            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/', get_treasure, {
+                headers: { Authorization: AuthString}
+            }
+        ).then((res) => {
+            console.log('Sell Treasure', res)
+            setSellTreasure([res.data])
+            setTimeout((sell_treasure) => {
+                setLoading(false)
+                window.location.reload(true);
+            }, 17000);
+        }).catch((err) => console.log(err));
+    };
+
+    const confirm_sell = () => {
+
+        setLoading(true)
+        axios
+            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/', confirm, {
+                headers: { Authorization: AuthString}
+            }
+        ).then((res) => {
+            console.log('Confirm Sell', res)
+            setSellTreasure([res.data])
             setTimeout((pickup_treasure) => {
                 setLoading(false)
                 window.location.reload(true);
@@ -125,6 +160,12 @@ const Controls = (props) => {
                 </div>
                 <div className="buttons">
                     <button className="button-direction treasure" onClick={pickup_treasure}>Pickup Treasure</button>
+                </div>
+                <div className="buttons">
+                    <button className="button-direction treasure" onClick={sell_treasure}>Sell Treasure</button>
+                </div>
+                <div className="buttons">
+                    <button className="button-direction treasure" onClick={confirm_sell}>Confirm</button>
                 </div>
             </div>
             )}

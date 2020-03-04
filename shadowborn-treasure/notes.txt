@@ -1,0 +1,8 @@
+south east north
+
+well id: 055
+well coord: (63,61)
+
+shop id: 001
+shop coord: (59,60)
+south west west
