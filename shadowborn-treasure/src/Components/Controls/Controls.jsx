@@ -12,6 +12,8 @@ const Controls = (props) => {
     const [direction, setDirection] = useState([]);
     const [treasure, setTreasure] = useState([]);
     const [sellTreasure, setSellTreasure] = useState([]);
+    const [praying, setPraying] = useState([]);
+    const [examine, setExamine] = useState([]);
     const [loading, setLoading] = useState([true])
 
     const AuthString = process.env.REACT_APP_JAMES_API_KEY
@@ -22,12 +24,21 @@ const Controls = (props) => {
     const west = '{"direction":"w"}'
     const get_treasure = '{"name":"treasure"}'
     const confirm = '{"name":"treasure", "confirm":"yes"}'
+    const prayer = '{"confirm":"yes"}'
+    const examine_it = '{"name":"well"}'
+
+    // const timeout = () => {
+    //     setTimeout(() => {
+    //         setLoading(false)
+    //         window.location.reload(true);
+    //     }, 17000);
+    // }
 
     const moveNorth = () => {
 
         setLoading(true)
         axios
-            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', north, {
+            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/', north, {
                 headers: { Authorization: AuthString}
             }
         ).then((res) => {
@@ -37,6 +48,7 @@ const Controls = (props) => {
                 setLoading(false)
                 window.location.reload(true);
             }, 17000);
+            // timeout(moveNorth)
             
         }).catch((err) => console.log(err));
     };
@@ -44,7 +56,7 @@ const Controls = (props) => {
 
         setLoading(true)
         axios
-            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', south, {
+            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/', south, {
                 headers: { Authorization: AuthString}
             }
         ).then((res) => {
@@ -61,7 +73,7 @@ const Controls = (props) => {
 
         setLoading(true)
         axios
-            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', east, {
+            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/', east, {
                 headers: { Authorization: AuthString}
             }
         ).then((res) => {
@@ -78,7 +90,7 @@ const Controls = (props) => {
 
         setLoading(true)
         axios
-            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', west, {
+            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/', west, {
                 headers: { Authorization: AuthString}
             }
         ).then((res) => {
@@ -137,10 +149,46 @@ const Controls = (props) => {
         ).then((res) => {
             console.log('Confirm Sell', res)
             setSellTreasure([res.data])
-            setTimeout((pickup_treasure) => {
+            setTimeout((confirm_sell) => {
                 setLoading(false)
                 window.location.reload(true);
             }, 17000);
+        }).catch((err) => console.log(err));
+    };
+    
+    
+    const pray = () => {
+
+        setLoading(true)
+        axios
+            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/pray/', prayer, {
+                headers: { Authorization: AuthString}
+            }
+        ).then((res) => {
+            console.log('Praying...', res)
+            setPraying([res.data])
+            setTimeout((pray) => {
+                setLoading(false)
+                window.location.reload(true);
+            }, 17000);
+        }).catch((err) => console.log(err));
+    };
+
+
+    const examining = () => {
+
+        setLoading(true)
+        axios
+            .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/', examine_it, {
+                headers: { Authorization: AuthString}
+            }
+        ).then((res) => {
+            setExamine([res.data])
+            setTimeout((examining) => {
+                setLoading(false)
+                window.location.reload(true);
+            }, 17000);
+            console.log('Examination', res.data.description)
         }).catch((err) => console.log(err));
     };
     
@@ -167,6 +215,12 @@ const Controls = (props) => {
                 </div>
                 <div className="buttons">
                     <button className="button-direction treasure" onClick={confirm_sell}>Confirm</button>
+                </div>
+                <div className="buttons">
+                    <button className="button-direction pray" onClick={pray}>Pray</button>
+                </div>
+                <div className="buttons">
+                    <button className="button-direction examine" onClick={examining}>Examine</button>
                 </div>
             </div>
             )}

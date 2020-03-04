@@ -27,7 +27,7 @@ function Home(props) {
       'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/',{ headers: { Authorization: AuthString } }
     ).then(result => {
       setLoading(false)
-      console.log(result.data)
+      console.log("Home result data",result.data)
       if (isSubscribed) {
         setData([result.data])
       }
