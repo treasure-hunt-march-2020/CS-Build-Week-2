@@ -17,6 +17,7 @@ class CPU:
         self.fl = [0] * 8
         # Stack Pointer
         self.sp = len(self.reg) - 1
+        self.PRA_instruction = ""
 
     def ram_read(self, mar):
         """Accept the address to read and return the value stored there"""
@@ -170,13 +171,6 @@ class CPU:
         JMP  = 0b01010100
         JEQ  = 0b01010101
         JNE  = 0b01010110
-        LD   = 0b10000011
-        JLT  = 0b01011000
-        JLE  = 0b01011001
-        JGT  = 0b01010111
-        JGE  = 0b01011010
-        IRET = 0b00010011
-        INT  = 0b01010010
         INC  = 0b01100101
         DEC  = 0b01100110
         SUB  = 0b10100001
@@ -214,8 +208,13 @@ class CPU:
                 # print("LDI statement", LDI )
                 print('operands a', operand_a, self.ram[operand_a])
                 print('operands b', operand_b, self.ram[operand_b])
-                self.reg[operand_a] = operand_b
+                self.reg[operand_a] = operand_b            
                 self.pc += 3
+
+            # PRA pseudo-instruction
+            elif ir == PRA:
+                self.PRA_instruction += chr(self.reg[operand_a])
+                self.pc += 2
             
             # Some ALU operations
 
@@ -291,6 +290,8 @@ class CPU:
             # halt operations
             elif ir == HLT:
                 print("Halt")
+                print("Message:")
+                print(self.PRA_instruction)
                 print("--===  End  ===--")
                 work = False
                 self.pc +=1
