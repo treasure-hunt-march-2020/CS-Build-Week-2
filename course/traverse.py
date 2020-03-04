@@ -53,6 +53,8 @@ def traverse(start_room):
     while stack.size() > 0:
         print("\n")
         print("+User status+", inventory_status())
+        print("Shop :", shop)
+        print("Wishing well :", wishing_well)
         print("\n")
 
         room_id = stack.pop()
@@ -79,7 +81,7 @@ def traverse(start_room):
                     graph.add_vertex(next_room["room_id"], next_room["title"], next_room["description"], next_room["coordinates"], next_room["players"], next_room["items"], next_room["exits"], next_room["cooldown"], next_room["errors"], next_room["messages"])
                     # print("graph.directions", graph.directions)
                     graph.add_edge(room_id, way, next_room["room_id"])
-                    print("graph.directions", graph.directions)
+                    # print("graph.directions", graph.directions)
                     print("\n===graph.directions len===", len(graph.directions))
                     stack.push(next_room["room_id"])
 
@@ -110,7 +112,7 @@ def traverse(start_room):
                             full_road = shop_road.extend(reverse)
                             
                             i = 0
-                            next_room_to = 0
+                            next_room_to = None
                             while i < len(full_road) - 1:
                                 current_room = full_road[i]
                                 next_room_to = full_road[i+1]
@@ -128,9 +130,9 @@ def traverse(start_room):
                                 if current_room not in visited:
                                     visited.add(current_room)
                                 i+=1
-                    if gold_need() == True:
-                        #TODO traverse to wishing well
-                        change_name()
+                    # if gold_need() == True:
+                    #     #TODO traverse to wishing well
+                    #     change_name()
                     
                     stack.push(next_room["room_id"])   
 
@@ -143,7 +145,7 @@ def traverse(start_room):
             room_path = graph.bfs(room_id, return_room)
 
             i = 0
-            next_room_to = 0
+            next_room_to = None
             while i < len(room_path)-1:
                 current_room = room_path[i]
                 next_room_to = room_path[i+1]
