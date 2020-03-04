@@ -84,13 +84,19 @@ class CPU:
 
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
-        #elif op == "SUB": etc
-        # multiply
+        elif op == "SUB":
+            self.reg[reg_a] -= self.reg[reg_b]
         elif op == "MUL":
             print(self.reg)
             print("reg_a", reg_a)
             print("reg_b", reg_b)
             self.reg[reg_a] *= self.reg[reg_b]
+        elif op == "DIV":
+            self.reg[reg_a] /= self.reg[reg_b]
+        elif op == "INC":
+            self.reg[reg_a] += 1
+        elif op == "DEC":
+            self.reg[reg_a] -= 1
         elif op == "CMP":
             # last 3 digits in self.fl => [00000LGE] are showing us [E]qual, [L]ower or [G]reater  mark
             # if reg_a = reg_b => set [E] flag to 1, otherwise 0
@@ -150,6 +156,25 @@ class CPU:
         JMP  = 0b01010100
         JEQ  = 0b01010101
         JNE  = 0b01010110
+        LD   = 0b10000011
+        JLT  = 0b01011000
+        JLE  = 0b01011001
+        JGT  = 0b01010111
+        JGE  = 0b01011010
+        IRET = 0b00010011
+        INT  = 0b01010010
+        INC  = 0b01100101
+        DEC  = 0b01100110
+        SUB  = 0b10100001
+        DIV  = 0b10100011
+        AND  = 0b10101000
+        OR   = 0b10101010
+        XOR  = 0b10101011
+        NOT  = 0b01101001
+        SHL  = 0b10101100
+        SHR  = 0b10101101
+        MOD  = 0b10100100
+        PRA  = 0b01001000
 
         # Main function 
         # Need to read memory address from register
