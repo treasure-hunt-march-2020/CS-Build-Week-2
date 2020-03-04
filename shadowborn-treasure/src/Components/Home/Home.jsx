@@ -49,7 +49,7 @@ function Home(props) {
             <div className="card room" key={item.room_id}>
             {/* <div className="card room" key={item.room_id} onClick={() => props.history.push(item.room_id)}> */}
               {/* <a href={item.name}>{item.name}</a> */}
-              <h1 className="room-name">{item.title}</h1>
+              <h1 className="room-name">{item.room_id}: {item.title}</h1>
               <h6 className="room-type">You are at {item.coordinates} coordinates, the elevation is {item.elevation} and the terrain is {item.terrain}</h6>
               <p>{item.description}</p>
               <p>Items: {item.items}</p>

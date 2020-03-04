@@ -152,6 +152,7 @@ const Controls = (props) => {
                         :
             <div className="all-cards rooms">
                 <div><h2>{direction.messages}</h2></div>
+                <div><h2>{sellTreasure.messages}</h2></div>
                 <div className="buttons">
                     <button className="button-direction" onClick={moveNorth}>North</button>
                     <button className="button-direction"onClick={moveEast}>East</button>

@@ -6,3 +6,31 @@ well coord: (63,61)
 shop id: 001
 shop coord: (59,60)
 south west west
+
+
+0 - A brightly lit room
+003 - Base of Mt. Holloway
+461 - Linh's Shrine
+499 - Glasowyn's Grave
+374 - Fully Shrine
+486 - Arron's Athenaeum
+22 - The Peak of Mt. Holloway
+467 - Pirate Ry's
+55 - Wishing Well
+15 - JKMT Donuts
+1 - Shop
+495 - The Transmogriphier
+492 - Sandofsky's Sanctum
+
+
+east
+south
+east
+south
+south
+south
+south
+south
+south
+south
+east
