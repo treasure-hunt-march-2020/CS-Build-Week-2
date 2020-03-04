@@ -41,7 +41,20 @@ def traverse(start_room):
     stack.push(start_room["room_id"])
     graph.add_vertex(start_room["room_id"], start_room["title"], start_room["description"], start_room["coordinates"], start_room["players"], start_room["items"], start_room["exits"], start_room["cooldown"], start_room["errors"], start_room["messages"])
 
+    shop = None
+    wishing_well = None
+
+    if start_room["title"] == "Shop":
+        shop = start_room["room_id"]
+
+    if start_room["title"] == "Wishing Well":
+        wishing_well = start_room["room_id"]
+
     while stack.size() > 0:
+        print("\n")
+        print("+User status+", inventory_status())
+        print("\n")
+
         room_id = stack.pop()
         print("room_id: ", room_id)
 
@@ -69,8 +82,58 @@ def traverse(start_room):
                     print("graph.directions", graph.directions)
                     print("\n===graph.directions len===", len(graph.directions))
                     stack.push(next_room["room_id"])
+
+                    if next_room["title"] == "Shop":
+                        shop = next_room["room_id"]
+
+                    if next_room["title"] == "Wishing Well":
+                        wishing_well = next_room["room_id"]
+
+                    if next_room["title"] == "Shrine":
+                        shrine_use()
+
                     moved = True
-        
+
+                    if len(next_room["items"]) > 0:
+
+                        if inventory_limit() == False:
+                            for item in next_room["items"]:
+                                print(" ==================")
+                                print("++++++ Item ++++++", item)
+                                print(" ==================")
+                                print("\n")
+                                treasure_pick(item)
+                        elif shop is not None:
+                            shop_road = graph.bfs(next_room["room_id"], shop)
+                            reverse = shop_road[::-1]
+                            reverse = reverse[1:]
+                            full_road = shop_road.extend(reverse)
+                            
+                            i = 0
+                            next_room_to = 0
+                            while i < len(full_road) - 1:
+                                current_room = full_road[i]
+                                next_room_to = full_road[i+1]
+
+                                if current_room == shop:
+                                    inventory_list = inventory_list()
+                                    for item in inventory_list:
+                                        treasure_sell(item)
+                                
+                                direction = graph.directions[current_room]
+                                for way in direction:
+                                    if direction[way] == next_room:
+                                        next_room = move_know(way, next_room)
+                                
+                                if current_room not in visited:
+                                    visited.add(current_room)
+                                i+=1
+                    if gold_need() == True:
+                        #TODO traverse to wishing well
+                        change_name()
+                    
+                    stack.push(next_room["room_id"])   
+
         if directions > 1:
             options.push(room_id)
 
