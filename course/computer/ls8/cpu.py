@@ -96,14 +96,20 @@ class CPU:
             # if reg_a = reg_b => set [E] flag to 1, otherwise 0
             if self.reg[reg_a] == self.reg[reg_b]:
                 self.fl[7] = 1
+                self.fl[6] = 0
+                self.fl[5] = 0
                 print("[  Equal  ]")
             # if reg_a < reg_b => set [L] flag to 1, otherwise 0
             if self.reg[reg_a] < self.reg[reg_b]:
+                self.fl[7] = 0
+                self.fl[6] = 0
                 self.fl[5] = 1
                 print("[  Lower  ]")
             # if reg_a > reg_b => set [G] flag to 1, otherwise 0
             if self.reg[reg_a] > self.reg[reg_b]:
-                self.fl[6] = 6
+                self.fl[7] = 0
+                self.fl[6] = 1
+                self.fl[5] = 0
                 print("[  Greater  ]")
         else:
             raise Exception("Unsupported ALU operation")
