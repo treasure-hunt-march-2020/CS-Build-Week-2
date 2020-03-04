@@ -71,3 +71,12 @@ def examine():
     res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/', headers=headers, data=data)
     print("Change name", res.json()) 
     time.sleep(res.json()["cooldown"])
+
+
+# print(treasure_drop('shiny treasure'))
+# print(inventory_status())
+# print(init())
+# move_know("e", "055")
+# change_name()
+# treasure_sell("great treasure")
+# examine()
