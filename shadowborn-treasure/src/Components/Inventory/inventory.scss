@@ -1,0 +1,13 @@
+.inventory-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.inventory-card{
+    border: 1px solid red;
+}
+.inventory-card h6{ 
+    padding: 0;
+    margin: 10px;
+}

@@ -1,0 +1,39 @@
+.exit-container{
+    // width:100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.exits {
+    padding: 0px 20px 0px 20px;
+}
+
+.all-cards {
+    border: 1px solid rgb(0, 195, 255);
+    flex-wrap: wrap;
+}
+.room-name{
+    display:flex;
+    justify-content: center;
+    width: 100%;
+}
+.room-type{
+    display:flex;
+    justify-content: center;
+    width: 50%;
+}
+
+.all-cards .rooms {
+    border: none;
+}
+.room {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.room h6 {
+    margin: 0;
+    border-bottom: 1px solid rgb(0, 204, 255);
+}

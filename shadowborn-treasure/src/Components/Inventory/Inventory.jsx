@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-// import Button from '@material-ui/core/Button';
+import './inventory.scss';
 
 import axios from 'axios';
 
-import Spinner from '../Spinner/Spinner';
-
-import Controls from '../Controls/Controls'
-
 function Inventory(props) {
+    const [inventory, setInventory] = useState([]);
 
+    const inv = []
+    
     useEffect(() => {
 
         const AuthString = process.env.REACT_APP_JAMES_API_KEY
 
         axios.post(
-            'https://lambda-treasure-hunt.herokuapp.com/api/adv/status/', { headers: { Authorization: AuthString } }
+            'https://lambda-treasure-hunt.herokuapp.com/api/adv/status/', inv, {
+                headers: { Authorization: AuthString}
+            }
         ).then(result => {
-            console.log(result)
+            console.log('Moved North', result)
+            setInventory([result.data])
+            console.log("Inventory result",result.data)
         }).catch(error => {
             console.log(error)
         })
@@ -26,11 +28,45 @@ function Inventory(props) {
     }, []);
 
     return (
-        <div>
-            <h6>Possible exits</h6>
-            <div className="exits">
-                Hello
+        <div className="inventory-container">
+            
+            {inventory.map(item => (
+            <div className="inventory-card" key={item.name}>
+              <h6>NAME: {item.name}</h6>
+              <h6>ENCUMBRANCE: {item.encumbrance}</h6>
+              <h6>STRENGTH: {item.strength}</h6>
+              <h6>SPEED: {item.speed}</h6>
+              <h6>GOLD: {item.gold}</h6>
+              {console.log("ooga booga",item.inventory)}
+
+            <div className="stuff">
+            {((item.inventory == []) ?
+                <h6>No items in inventory!</h6>
+                
+                :
+
+                <h6>Treasures: {item.inventory}</h6>
+                
+              )}
+            {((item.abilities !== []) ?
+                <h6>No abilities!</h6>
+                
+                :
+
+                <h6>{item.abilities.name}</h6>
+                
+              )}
+            {((item.status !== []) ?
+                <h6>No status active!</h6>
+                
+                :
+
+                <h6>{item.status.name}</h6>
+                
+              )}
+              </div>
             </div>
+          ))}
         </div>
     )
 }

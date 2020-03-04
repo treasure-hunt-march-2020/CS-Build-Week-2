@@ -6,7 +6,7 @@ import "../../styles/loader.scss"
 const LoadingSpinner = () => (
     <div className='loader-div'>
         <Loader type="MutatingDots" height={100} width={100} color='red' />
-        <h3 className='loading-message'>Loading...</h3>
+        <h6 className='loading-message'>Traveling...</h6>
     </div>
 )
 

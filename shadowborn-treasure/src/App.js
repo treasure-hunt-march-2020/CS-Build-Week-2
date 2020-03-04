@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        {/* <Inventory /> */}
+        <Inventory />
         <Router>
           <Route exact path="/" component={Home}/>
           <Route exact path="/north" component={Home}/>
