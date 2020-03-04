@@ -63,7 +63,7 @@ def show_inventory(inventory = None):
 
 def inventory_limit(inventory = None):
     inventory = inventory_status()
-    if len(inventory["inventory"]) == ["strength"]:
+    if inventory["strength"] >= inventory["encumbrance"]:
         return True
     else:
         return False
