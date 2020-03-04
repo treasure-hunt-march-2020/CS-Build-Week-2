@@ -217,13 +217,66 @@ class CPU:
                 self.reg[operand_a] = operand_b
                 self.pc += 3
             
-            # Multiply the values
+            # Some ALU operations
+
+            elif ir == CMP:
+                # Compare 2 values
+                self.alu("CMP", operand_a, operand_b)
+                print("^ Compare ^")
+                # print("Register: ", self.reg)
+                # print("Flag: ", self.reg[self.fl])
+                self.pc += 3
+
+            elif ir == ADD:
+                self.alu("ADD", operand_a, operand_b)
+                self.pc += 3
+
+            elif ir == SUB:
+                self.alu("SUB", operand_a, operand_b)
+                self.pc += 3
+
             elif ir == MUL: 
                 self.alu("MUL", operand_a, operand_b)
                 self.pc += 3
             
-            elif ir == ADD:
-                self.alu("ADD", operand_a, operand_b)
+            elif ir == DIV: 
+                self.alu("DIV", operand_a, operand_b)
+                self.pc += 3
+
+            elif ir == INC: 
+                self.alu("INC", operand_a, operand_b)
+                self.pc += 2
+
+            elif ir == DEC: 
+                self.alu("DEC", operand_a, operand_b)
+                self.pc += 2
+
+            elif ir == AND: 
+                self.alu("AND", operand_a, operand_b)
+                self.pc += 3
+            
+            elif ir == OR: 
+                self.alu("OR", operand_a, operand_b)
+                self.pc += 3
+
+            elif ir == XOR: 
+                self.alu("XOR", operand_a, operand_b)
+                self.pc += 3
+
+            elif ir == NOT: 
+                self.alu("NOT", operand_a, operand_b)
+                self.pc += 3
+
+            elif ir == SHL: 
+                self.alu("SHL", operand_a, operand_b)
+                self.pc += 3
+
+            elif ir == SHR: 
+                self.alu("SHR", operand_a, operand_b)
+                self.pc += 3
+
+            elif ir == MOD: 
+                self.alu("MOD", operand_a, operand_b)
                 self.pc += 3
 
             # Print value that is stored in the given register
@@ -293,13 +346,7 @@ class CPU:
                 # Increment Stack Pointer
                 self.reg[self.sp] += 1
             
-            elif ir == CMP:
-                # Compare 2 values
-                self.alu("CMP", operand_a, operand_b)
-                print("^ Compare ^")
-                # print("Register: ", self.reg)
-                # print("Flag: ", self.reg[self.fl])
-                self.pc += 3
+
 
             elif ir == JMP:
                 # Jump to the address stored in the given register.
@@ -325,6 +372,7 @@ class CPU:
                 else:
                     print("JNE command, but skipped")
                     self.pc += 2
+            
 
             else:
                 print(f"Unknown command {ir}")
