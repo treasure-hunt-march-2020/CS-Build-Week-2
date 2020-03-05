@@ -74,7 +74,9 @@ def traverse(start_room):
         for way in exits:
             print("Way in exits: ", way, exits[way])
             if exits[way] == "?":
+                # Possible directions add amount of question mark
                 directions +=1
+                # Moves to unexplored room and add it to vertices andd edges
                 if moved == False:
                     next_room = move(way)
                     print("next_room: ", next_room)
@@ -85,6 +87,7 @@ def traverse(start_room):
                     print("\n===graph.directions len===", len(graph.directions))
                     stack.push(next_room["room_id"])
 
+                    # Checking if there uniq room
                     if next_room["title"] == "Shop":
                         shop = next_room["room_id"]
 
@@ -96,8 +99,9 @@ def traverse(start_room):
 
                     moved = True
 
+                    # If room where we just entered has a items
                     if len(next_room["items"]) > 0:
-
+                        # If you have ability to pick that:
                         if inventory_limit() == False:
                             for item in next_room["items"]:
                                 print(" ==================")
@@ -105,6 +109,7 @@ def traverse(start_room):
                                 print(" ==================")
                                 print("\n")
                                 treasure_pick(item)
+                        # If you know where is the shop - go there and sell treasures
                         elif shop is not None:
                             shop_road = graph.bfs(next_room["room_id"], shop)
                             reverse = shop_road[::-1]
@@ -117,6 +122,7 @@ def traverse(start_room):
                                 current_room = full_road[i]
                                 next_room_to = full_road[i+1]
 
+                                # If you in store - sell each item from inventory
                                 if current_room == shop:
                                     inventory_list = inventory_list()
                                     for item in inventory_list:
@@ -139,6 +145,7 @@ def traverse(start_room):
         if directions > 1:
             options.push(room_id)
 
+        # If we in dead end - use bfs
         if directions == 0:
             return_room = options.pop()
             print("==========BFS==========")

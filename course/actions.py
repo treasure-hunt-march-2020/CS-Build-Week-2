@@ -81,13 +81,52 @@ def gold_need(inventory = None):
         return False
 
 # ============= Name change =======================
-def change_name():
-
-    data = '{"name":"[Heorhii Siburov]"}'
-    res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/change_name/', headers=headers, data=data)
-    print("Change name", res.json()) 
-
 def shrine_use():
 
     res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/change_name/', headers=headers)
     print("-==Shrine use==-", res.json()) 
+
+def change_name():
+
+    data = '{"name":"[Heorhii Siburov]", "confirm":"aye"}'
+    res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/change_name/', headers=headers, data=data)
+    print("Change name", res.json()) 
+    time.sleep(res.json()["cooldown"])
+
+def examine():
+
+    data = '{"name":"well"}'
+    res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/', headers=headers, data=data)
+    print("Change name", res.json()) 
+    time.sleep(res.json()["cooldown"])
+
+def balance():
+
+    res = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/bc/get_balance/', headers=headers)
+    time.sleep(res.json()["cooldown"])
+    return res.json()
+
+def proof():
+
+    res = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/', headers=headers)
+    time.sleep(res.json()["cooldown"])
+    return res.json()
+
+def mine(new_proof):
+
+    data = json.dumps({'proof':new_proof })
+    res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/bc/mine/', headers=headers, data=data)
+    print("MINE AWAY", res.json())
+    return res.json()
+
+def give_proof():
+
+    res = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/', headers=headers)
+    time.sleep(res.json()["cooldown"])
+    return res.json()["proof"]
+
+def give_difficulty():
+
+    res = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/', headers=headers)
+    time.sleep(res.json()["cooldown"])
+    return res.json()["difficulty"]

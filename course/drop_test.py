@@ -1,5 +1,6 @@
 import requests 
 import time 
+import json 
 
 headers = {
         'Authorization': 'Token 0578cda4d3cc0b65ac21d7e03dd509bbafd50e39',
@@ -72,11 +73,30 @@ def examine():
     print("Change name", res.json()) 
     time.sleep(res.json()["cooldown"])
 
+def balance():
+
+    res = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/bc/get_balance/', headers=headers)
+    time.sleep(res.json()["cooldown"])
+    return res.json()
+
+def proof():
+
+    res = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/', headers=headers)
+    time.sleep(res.json()["cooldown"])
+    return res.json()
+
+def mine(proof):
+
+    data = json.dumps({'proof':proof })
+    res = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/bc/mine/', headers=headers, data=data)
+    print("MINE AWAY", res.json())
+    return res.json()
+
+
 
 # print(treasure_drop('shiny treasure'))
 # print(inventory_status())
+print(balance())
 # print(init())
-# move_know("e", "055")
 # change_name()
-# treasure_sell("great treasure")
 # examine()
