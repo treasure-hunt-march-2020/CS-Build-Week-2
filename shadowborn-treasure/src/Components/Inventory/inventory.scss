@@ -6,8 +6,18 @@
 
 .inventory-card{
     border: 1px solid red;
+    
+}
+.inventory-headers {
+    display: flex;
+    justify-content: space-evenly;
 }
 .inventory-card h6{ 
     padding: 0;
     margin: 10px;
+}
+
+.stuff {
+    display: flex;
+    justify-content: space-evenly;
 }

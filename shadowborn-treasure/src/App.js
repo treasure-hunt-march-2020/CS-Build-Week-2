@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import maze from './images/maze1.jpg'
+import './App.scss';
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/north" component={Home}/>
           <Route exact path="/south" component={Home}/>
         </Router>
+        <img className="maze-img" src={maze} alt="maze" height="100px" width="100px"/>
       </header>
     </div>
   );

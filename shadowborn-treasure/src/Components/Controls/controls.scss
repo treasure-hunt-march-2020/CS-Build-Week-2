@@ -14,3 +14,12 @@ background-color: #555555; /* Green */
 .treasure {
     background-color: rgb(207, 152, 0);
 }
+
+.treasure-buttons {
+  display: flex;
+  justify-content: center;
+}
+.alt-buttons {
+  display: flex;
+  justify-content: center;
+}

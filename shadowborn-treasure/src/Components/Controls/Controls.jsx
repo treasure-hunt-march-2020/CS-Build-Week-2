@@ -14,6 +14,7 @@ const Controls = (props) => {
     const [sellTreasure, setSellTreasure] = useState([]);
     const [praying, setPraying] = useState([]);
     const [examine, setExamine] = useState([]);
+    const [mine, setMine] = useState([]);
     const [loading, setLoading] = useState([true])
 
     const AuthString = process.env.REACT_APP_JAMES_API_KEY
@@ -26,6 +27,7 @@ const Controls = (props) => {
     const confirm = '{"name":"treasure", "confirm":"yes"}'
     const prayer = '{"confirm":"yes"}'
     const examine_it = '{"name":"well"}'
+    const new_proof = '{"proof":""}'
 
     // const timeout = () => {
     //     setTimeout(() => {
@@ -192,6 +194,24 @@ const Controls = (props) => {
         }).catch((err) => console.log(err));
     };
     
+    
+    const mining = () => {
+
+        setLoading(true)
+        axios
+            .post('https://lambda-treasure-hunt.herokuapp.com/api/bc/mine/', new_proof, {
+                headers: { Authorization: AuthString}
+            }
+        ).then((res) => {
+            setMine([res.data])
+            setTimeout((mining) => {
+                setLoading(false)
+                window.location.reload(true);
+            }, 17000);
+            console.log('Mining data', res.data.description)
+        }).catch((err) => console.log(err));
+    };
+    
     return (
         <Router>
             {console.log('Direction',direction)}
@@ -207,6 +227,7 @@ const Controls = (props) => {
                     <button className="button-direction" onClick={moveSouth}>South</button>
                     <button className="button-direction"onClick={moveWest}>West</button>
                 </div>
+                <div className="treasure-buttons">
                 <div className="buttons">
                     <button className="button-direction treasure" onClick={pickup_treasure}>Pickup Treasure</button>
                 </div>
@@ -216,11 +237,17 @@ const Controls = (props) => {
                 <div className="buttons">
                     <button className="button-direction treasure" onClick={confirm_sell}>Confirm</button>
                 </div>
+                </div>
+                <div className="alt-buttons">
                 <div className="buttons">
                     <button className="button-direction pray" onClick={pray}>Pray</button>
                 </div>
                 <div className="buttons">
                     <button className="button-direction examine" onClick={examining}>Examine</button>
+                </div>
+                <div className="buttons">
+                    <button className="button-direction mine" onClick={mining}>Mine</button>
+                </div>
                 </div>
             </div>
             )}
